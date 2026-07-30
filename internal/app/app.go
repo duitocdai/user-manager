@@ -5,6 +5,7 @@ import (
 
 	"github.com/duitocdai/internal/config"
 	"github.com/duitocdai/internal/routes"
+	"github.com/duitocdai/internal/validation"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 )
@@ -20,9 +21,9 @@ type Application struct {
 }
 
 func NewApplication(cfg *config.Config) *Application {
-	r := gin.Default()
-
+	validation.InitValidator()
 	LoadEnv()
+	r := gin.Default()
 	modules := []Module{
 		NewUserModule(),
 	}
