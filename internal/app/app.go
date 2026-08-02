@@ -21,7 +21,9 @@ type Application struct {
 }
 
 func NewApplication(cfg *config.Config) *Application {
-	validation.InitValidator()
+	if err := validation.InitValidator(); err != nil {
+		log.Fatal("Validator init failed %v", err)
+	}
 	LoadEnv()
 	r := gin.Default()
 	modules := []Module{
