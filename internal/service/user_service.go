@@ -1,8 +1,9 @@
 package service
 
 import (
-	"log"
+	"strings"
 
+	"github.com/duitocdai/internal/models"
 	model "github.com/duitocdai/internal/models"
 	repository "github.com/duitocdai/internal/repository"
 	"github.com/duitocdai/internal/utils"
@@ -19,9 +20,34 @@ func NewUserService(repo repository.UserRepository) UserService {
 		repo: repo,
 	}
 }
-func (us *userService) GetAllUser() {
-	us.repo.FindAll()
-	log.Println("getALLuSER INTO userService")
+func (us *userService) GetAllUser(search string, page, limit int) ([]models.User, error) {
+	users, err := us.repo.FindAll()
+	if err != nil {
+		return nil, utils.WrapError(err, "failed to fetch users", utils.ErrCodeInternal)
+	}
+	var filterUsers []model.User
+	if search != "" {
+		search = strings.ToLower(search)
+		for _, user := range users {
+			name := strings.ToLower(user.Name)
+			email := strings.ToLower(user.Email)
+			if strings.Contains(name, search) || strings.Contains(email, search) {
+				filterUsers = append(filterUsers, user)
+			}
+		}
+	} else {
+		filterUsers = users
+	}
+	start := (page - 1) * limit
+	if start >= len(filterUsers) {
+		return []models.User{}, nil
+	}
+
+	end := start + limit
+	if end > len(filterUsers) {
+		end = len(filterUsers)
+	}
+	return filterUsers[start:end], nil
 }
 func (us *userService) CreateUser(user model.User) (model.User, error) {
 	user.Email = utils.NormalizeString(user.Email)
@@ -43,8 +69,12 @@ func (us *userService) CreateUser(user model.User) (model.User, error) {
 	}
 	return user, nil
 }
-func (us *userService) GetUserByUUID() {
-
+func (us *userService) GetUserByUUID(uuid string) (model.User, error) {
+	user, found := us.repo.FindByUUID(uuid)
+	if !found {
+		return model.User{}, utils.NewError("user not found", utils.ErrCodeNotFound)
+	}
+	return user, nil
 }
 func (us *userService) UpdateUser() {
 

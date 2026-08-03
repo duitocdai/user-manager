@@ -62,7 +62,13 @@ func MapUserToDTO(user model.User) *UserDTO {
 		Level:  MapLevelText(user.Level),
 	}
 }
-
+func MapUsersToDTO(users []models.User) []*UserDTO {
+	dtos := make([]*UserDTO, 0, len(users))
+	for _, user := range users {
+		dtos = append(dtos, MapUserToDTO(user))
+	}
+	return dtos
+}
 func MapStatusText(status int) string {
 	switch status {
 	case 1:

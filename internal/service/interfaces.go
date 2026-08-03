@@ -1,11 +1,14 @@
 package service
 
-import model "github.com/duitocdai/internal/models"
+import (
+	"github.com/duitocdai/internal/models"
+	model "github.com/duitocdai/internal/models"
+)
 
 type UserService interface {
-	GetAllUser()
+	GetAllUser(search string, page, limit int) ([]models.User, error)
 	CreateUser(user model.User) (model.User, error)
-	GetUserByUUID()
+	GetUserByUUID(uuid string) (model.User, error)
 	UpdateUser()
 	DeleteUser()
 }

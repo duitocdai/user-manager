@@ -1,8 +1,6 @@
 package repository
 
 import (
-	"log"
-
 	model "github.com/duitocdai/internal/models"
 )
 
@@ -15,15 +13,20 @@ func NewInMemoryUserRepository() UserRepository {
 		users: make([]model.User, 0),
 	}
 }
-func (ur *InMemoryUserRepository) FindAll() {
-	log.Println("find all repository ")
+func (ur *InMemoryUserRepository) FindAll() ([]model.User, error) {
+	return ur.users, nil
 }
 func (ur *InMemoryUserRepository) Create(user model.User) error {
 	ur.users = append(ur.users, user)
 	return nil
 }
-func (ur *InMemoryUserRepository) FindByUUID() {
-
+func (ur *InMemoryUserRepository) FindByUUID(uuid string) (model.User, bool) {
+	for _, user := range ur.users {
+		if user.UUID == uuid {
+			return user, true
+		}
+	}
+	return model.User{}, false
 }
 func (ur *InMemoryUserRepository) Update() {
 
