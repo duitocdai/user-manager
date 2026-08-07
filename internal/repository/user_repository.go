@@ -1,6 +1,9 @@
 package repository
 
 import (
+	"fmt"
+	"slices"
+
 	model "github.com/duitocdai/internal/models"
 )
 
@@ -28,11 +31,24 @@ func (ur *InMemoryUserRepository) FindByUUID(uuid string) (model.User, bool) {
 	}
 	return model.User{}, false
 }
-func (ur *InMemoryUserRepository) Update() {
+func (ur *InMemoryUserRepository) Update(uuid string, user model.User) error {
+	for i, u := range ur.users {
+		if u.UUID == uuid {
+			ur.users[i] = user
+			return nil
+		}
+	}
 
+	return fmt.Errorf("user not found")
 }
-func (ur *InMemoryUserRepository) Delete() {
-
+func (ur *InMemoryUserRepository) Delete(uuid string) error {
+	for i, u := range ur.users {
+		if u.UUID == uuid {
+			ur.users = slices.Delete(ur.users, i, i+1)
+			return nil
+		}
+	}
+	return fmt.Errorf("user not found")
 }
 func (ur *InMemoryUserRepository) FindByEmail(email string) (model.User, bool) {
 	for _, user := range ur.users {

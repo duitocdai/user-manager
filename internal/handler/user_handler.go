@@ -4,7 +4,6 @@ import (
 	"net/http"
 
 	"github.com/duitocdai/internal/dto"
-	model "github.com/duitocdai/internal/models"
 	"github.com/duitocdai/internal/service"
 	"github.com/duitocdai/internal/utils"
 	"github.com/duitocdai/internal/validation"
@@ -52,11 +51,12 @@ func (uh *UserHandler) GetAllUser(ctx *gin.Context) {
 	utils.ReponseSuccess(ctx, http.StatusOK, usersDTO)
 }
 func (uh *UserHandler) CreateUser(ctx *gin.Context) {
-	var user model.User
-	if err := ctx.ShouldBindJSON(&user); err != nil {
+	var input dto.CreateUserInput
+	if err := ctx.ShouldBindJSON(&input); err != nil {
 		utils.ReponseValidator(ctx, validation.HandleValidationErrors(err))
 		return
 	}
+	user := input.MapCreateInputToModel()
 	createdUser, err := uh.service.CreateUser(user)
 	if err != nil {
 		utils.ReponseError(ctx, err)
@@ -82,8 +82,37 @@ func (uh *UserHandler) GetUserByUUID(ctx *gin.Context) {
 	utils.ReponseSuccess(ctx, http.StatusCreated, &userDTO)
 }
 func (uh *UserHandler) UpdateUser(ctx *gin.Context) {
+	var params GetUserByUuidParam
 
+	if err := ctx.ShouldBindUri(&params); err != nil {
+		utils.ReponseValidator(ctx, validation.HandleValidationErrors(err))
+		return
+	}
+	var input dto.UpdateUserInput
+	if err := ctx.ShouldBindJSON(&input); err != nil {
+		utils.ReponseValidator(ctx, validation.HandleValidationErrors(err))
+		return
+	}
+	users := input.MapUpdateInputToModel()
+	updatedUser, err := uh.service.UpdateUser(params.Uuid, users)
+	if err != nil {
+		utils.ReponseError(ctx, err)
+		return
+	}
+
+	userDTO := dto.MapUserToDTO(updatedUser)
+
+	utils.ReponseSuccess(ctx, http.StatusOK, &userDTO)
 }
 func (uh *UserHandler) DeleteUser(ctx *gin.Context) {
-
+	var params GetUserByUuidParam
+	if err := ctx.ShouldBindUri(&params); err != nil {
+		utils.ReponseValidator(ctx, validation.HandleValidationErrors(err))
+		return
+	}
+	if err := uh.service.DeleteUser(params.Uuid); err != nil {
+		utils.ReponseError(ctx, err)
+		return
+	}
+	utils.ReponseStatusCode(ctx, http.StatusNoContent)
 }
