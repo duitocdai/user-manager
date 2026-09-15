@@ -1,15 +1,15 @@
-package routes
+package v1routes
 
 import (
-	"github.com/duitocdai/internal/handler"
+	v1handler "github.com/duitocdai/internal/handler/v1"
 	"github.com/gin-gonic/gin"
 )
 
 type UserRoutes struct {
-	handler *handler.UserHandler
+	handler *v1handler.UserHandler
 }
 
-func NewUserRoutes(handler *handler.UserHandler) *UserRoutes {
+func NewUserRoutes(handler *v1handler.UserHandler) *UserRoutes {
 	return &UserRoutes{
 		handler: handler,
 	}

@@ -1,9 +1,4 @@
-package dto
-
-import (
-	"github.com/duitocdai/internal/models"
-	model "github.com/duitocdai/internal/models"
-)
+package v1dto
 
 // //data transfer object dùng để truyền dữ liệu giữa các tầng layers hoặc giữu client hoặc server
 type UserDTO struct {
@@ -32,43 +27,13 @@ type UpdateUserInput struct {
 	Level    int    `json:"level" binding:"required,oneof=1 2"`
 }
 
-func (input *CreateUserInput) MapCreateInputToModel() models.User {
-	return models.User{
-		Name:     input.Name,
-		Email:    input.Email,
-		Age:      input.Age,
-		Password: input.Password,
-		Status:   input.Status,
-		Level:    input.Level,
-	}
+func (input *CreateUserInput) MapCreateInputToModel() {
+
 }
-func (input *UpdateUserInput) MapUpdateInputToModel() models.User {
-	return models.User{
-		Name:     input.Name,
-		Email:    input.Email,
-		Age:      input.Age,
-		Password: input.Password,
-		Status:   input.Status,
-		Level:    input.Level,
-	}
+func (input *UpdateUserInput) MapUpdateInputToModel() {
+
 }
-func MapUserToDTO(user model.User) *UserDTO {
-	return &UserDTO{
-		UUID:   user.UUID,
-		Name:   user.Name,
-		Age:    user.Age,
-		Email:  user.Email,
-		Status: MapStatusText(user.Status),
-		Level:  MapLevelText(user.Level),
-	}
-}
-func MapUsersToDTO(users []models.User) []*UserDTO {
-	dtos := make([]*UserDTO, 0, len(users))
-	for _, user := range users {
-		dtos = append(dtos, MapUserToDTO(user))
-	}
-	return dtos
-}
+
 func MapStatusText(status int) string {
 	switch status {
 	case 1:

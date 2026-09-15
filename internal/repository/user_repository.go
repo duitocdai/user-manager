@@ -1,61 +1,25 @@
 package repository
 
 import (
-	"fmt"
-	"slices"
+	"context"
 
-	model "github.com/duitocdai/internal/models"
+	"github.com/duitocdai/internal/db/sqlc"
 )
 
-type InMemoryUserRepository struct {
-	users []model.User
+type SqlUserRepository struct {
+	db sqlc.Querier
 }
 
-func NewInMemoryUserRepository() UserRepository {
-	return &InMemoryUserRepository{
-		users: make([]model.User, 0),
+func NewSqlUserRepository(db sqlc.Querier) UserRepository {
+	return &SqlUserRepository{
+		db: db,
 	}
 }
-func (ur *InMemoryUserRepository) FindAll() ([]model.User, error) {
-	return ur.users, nil
+func (ur *SqlUserRepository) FindAll() {}
+func (ur *SqlUserRepository) Create(ctx context.Context, userParams sqlc.CreateUserParams) {
+	ur.db.CreateUser(ctx, userParams)
 }
-func (ur *InMemoryUserRepository) Create(user model.User) error {
-	ur.users = append(ur.users, user)
-	return nil
-}
-func (ur *InMemoryUserRepository) FindByUUID(uuid string) (model.User, bool) {
-	for _, user := range ur.users {
-		if user.UUID == uuid {
-			return user, true
-		}
-	}
-	return model.User{}, false
-}
-func (ur *InMemoryUserRepository) Update(uuid string, user model.User) error {
-	for i, u := range ur.users {
-		if u.UUID == uuid {
-			ur.users[i] = user
-			return nil
-		}
-	}
-
-	return fmt.Errorf("user not found")
-}
-func (ur *InMemoryUserRepository) Delete(uuid string) error {
-	for i, u := range ur.users {
-		if u.UUID == uuid {
-			ur.users = slices.Delete(ur.users, i, i+1)
-			return nil
-		}
-	}
-	return fmt.Errorf("user not found")
-}
-func (ur *InMemoryUserRepository) FindByEmail(email string) (model.User, bool) {
-	for _, user := range ur.users {
-		if user.Email == email {
-			return user, true
-		}
-	}
-
-	return model.User{}, false
-}
+func (ur *SqlUserRepository) FindByUUID(uuid string)   {}
+func (ur *SqlUserRepository) Update(uuid string)       {}
+func (ur *SqlUserRepository) Delete(uuid string)       {}
+func (ur *SqlUserRepository) FindByEmail(email string) {}

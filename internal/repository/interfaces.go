@@ -1,12 +1,16 @@
 package repository
 
-import model "github.com/duitocdai/internal/models"
+import (
+	"context"
+
+	"github.com/duitocdai/internal/db/sqlc"
+)
 
 type UserRepository interface {
-	FindAll() ([]model.User, error)
-	Create(user model.User) error
-	FindByUUID(uuid string) (model.User, bool)
-	Update(uuid string, user model.User) error
-	Delete(uuid string) error
-	FindByEmail(email string) (model.User, bool)
+	FindAll()
+	Create(ctx context.Context, userParams sqlc.CreateUserParams)
+	FindByUUID(uuid string)
+	Update(uuid string)
+	Delete(uuid string)
+	FindByEmail(email string)
 }
