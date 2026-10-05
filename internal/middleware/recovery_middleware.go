@@ -12,29 +12,33 @@ import (
 	"github.com/rs/zerolog"
 )
 
-func RecoveryMiddlware(recoveryLogger *zerolog.Logger) gin.HandlerFunc {
+func RecoveryMiddleware(recoveryLogger *zerolog.Logger) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
+
 		defer func() {
 			if err := recover(); err != nil {
 				stack := debug.Stack()
-				stack_at := ExtractFirstAppStackLine(stack)
+
+				statck_at := ExtractFirstAppStackLine(stack)
 
 				recoveryLogger.Error().
 					Str("path", ctx.Request.URL.Path).
 					Str("method", ctx.Request.Method).
 					Str("client_ip", ctx.ClientIP()).
 					Str("panic", fmt.Sprintf("%v", err)).
-					Str("statck_at", string(stack_at)).
+					Str("statck_at", statck_at).
 					Str("statck", string(stack)).
 					Msg("panic occurred")
 
 				ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
 					"code":    "INTERNAL_SERVER_ERROR",
-					"message": "Please try again later",
+					"message": "Please try again later.",
 				})
 			}
 		}()
+
 		ctx.Next()
+
 	}
 }
 
@@ -47,13 +51,13 @@ func ExtractFirstAppStackLine(stack []byte) string {
 		if bytes.Contains(line, []byte(".go")) &&
 			!bytes.Contains(line, []byte("/runtime/")) &&
 			!bytes.Contains(line, []byte("/debug/")) &&
-			!bytes.Contains(line, []byte("/recovery_middleware.go/")) {
+			!bytes.Contains(line, []byte("recovery_middleware.go")) {
 			cleanLine := strings.TrimSpace(string(line))
 			match := statckLineRegex.FindStringSubmatch(cleanLine)
+
 			if len(match) > 1 {
 				return match[1]
 			}
-			return cleanLine
 		}
 	}
 

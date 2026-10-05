@@ -14,8 +14,10 @@ import (
 	"github.com/duitocdai/internal/db/sqlc"
 	"github.com/duitocdai/internal/routes"
 	"github.com/duitocdai/internal/validation"
+	"github.com/duitocdai/pkg/auth"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
+	"github.com/redis/go-redis/v9"
 )
 
 type Module interface {
@@ -28,7 +30,8 @@ type Application struct {
 	modules []Module
 }
 type ModuleContext struct {
-	DB sqlc.Querier
+	DB    sqlc.Querier
+	Redis *redis.Client
 }
 
 func NewApplication(cfg *config.Config) *Application {
@@ -37,12 +40,18 @@ func NewApplication(cfg *config.Config) *Application {
 	}
 	LoadEnv()
 	r := gin.Default()
-
+	if err := db.InitDB(); err != nil {
+		log.Fatalf("database init false: %v", err)
+	}
+	redisClient := config.NewRedisClient()
+	tokenService := auth.NewJWTService()
 	ctx := &ModuleContext{
-		DB: db.DB,
+		DB:    db.DB,
+		Redis: redisClient,
 	}
 	modules := []Module{
 		NewUserModule(ctx),
+		NewAuthModule(ctx, tokenService),
 	}
 	routes.RegisterRoutes(r, getModulRoutes(modules)...)
 	return &Application{
@@ -72,7 +81,7 @@ func (a *Application) Run() error {
 	}()
 	<-quit
 	log.Println("shut down signal received ...")
-	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 	if err := srv.Shutdown(ctx); err != nil {
 		log.Fatalf("server forced to shutdown: %v", err)

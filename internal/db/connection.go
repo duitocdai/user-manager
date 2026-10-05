@@ -8,10 +8,14 @@ import (
 
 	"github.com/duitocdai/internal/config"
 	"github.com/duitocdai/internal/db/sqlc"
+	"github.com/duitocdai/internal/utils"
+	"github.com/duitocdai/pkg/pgx"
 	"github.com/jackc/pgx/v5/pgxpool"
+	"github.com/jackc/pgx/v5/tracelog"
 )
 
 var DB sqlc.Querier
+var DBPool *pgxpool.Pool
 
 func InitDB() error {
 	connStr := config.NewConfig().DNS()
@@ -20,7 +24,15 @@ func InitDB() error {
 	if err != nil {
 		return fmt.Errorf("error passing db config: %v", err)
 	}
+	sqlLogger := utils.NewLoggerWithPath("../../internal/logs/sql.log", "info")
 
+	conf.ConnConfig.Tracer = &tracelog.TraceLog{
+		Logger: &pgx.PgxZerologTracer{
+			Logger:         *sqlLogger,
+			SlowQueryLimit: 500 * time.Millisecond,
+		},
+		LogLevel: tracelog.LogLevelDebug,
+	}
 	conf.MaxConns = 50
 	conf.MinConns = 5
 	conf.MaxConnLifetime = 30 * time.Minute
@@ -30,7 +42,7 @@ func InitDB() error {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
-	DBPool, err := pgxpool.NewWithConfig(ctx, conf)
+	DBPool, err = pgxpool.NewWithConfig(ctx, conf)
 	if err != nil {
 		return fmt.Errorf("error creating db pool: %v", err)
 	}

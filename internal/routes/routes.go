@@ -2,10 +2,10 @@ package routes
 
 import (
 	"github.com/duitocdai/internal/middleware"
+	v1routes "github.com/duitocdai/internal/routes/v1"
 	"github.com/duitocdai/internal/utils"
-	"github.com/duitocdai/pkg/logger"
+	"github.com/gin-contrib/gzip"
 	"github.com/gin-gonic/gin"
-	"github.com/rs/zerolog"
 )
 
 type Route interface {
@@ -13,32 +13,40 @@ type Route interface {
 }
 
 func RegisterRoutes(r *gin.Engine, routes ...Route) {
-	httpLogger := newLoggerWithPath("../../internal/logs/http.log", "info")
-	recoveryLogger := newLoggerWithPath("../../internal/logs/recovery.log", "warning")
-	rateLimiterLoger := newLoggerWithPath("../../internal/logs/ratelimiter.log", "warning")
+	httpLogger := utils.NewLoggerWithPath("../../internal/logs/http.log", "info")
+	recoveryLogger := utils.NewLoggerWithPath("../../internal/logs/recovery.log", "warning")
+	rateLimiterLoger := utils.NewLoggerWithPath("../../internal/logs/ratelimiter.log", "warning")
+	r.Use(gzip.Gzip(gzip.DefaultCompression))
 	r.Use(
 		middleware.RateLimiterMiddleware(rateLimiterLoger),
+		middleware.CORSMiddleware(),
+		middleware.TraceMiddleware(),
 		middleware.LoggerMiddleware(httpLogger),
-		middleware.RecoveryMiddlware(recoveryLogger),
+		middleware.RecoveryMiddleware(recoveryLogger),
 		middleware.ApiKeyMiddleware(),
-		middleware.AuthMiddleware(),
 	)
+
 	v1api := r.Group("/api/v1")
 
-	for _, route := range routes {
-		route.Register(v1api)
-	}
-}
+	protected := v1api.Group("")
+	protected.Use(
+		middleware.AuthMiddleware(),
+	)
 
-func newLoggerWithPath(path string, level string) *zerolog.Logger {
-	config := logger.LoggerConfig{
-		Level:      level,
-		Filename:   path,
-		MaxSize:    1,
-		MaxBackups: 5,
-		MaxAge:     5,
-		Compress:   true,
-		IsDev:      utils.GetEnv("APP_ENV", "development"),
+	for _, route := range routes {
+		switch route.(type) {
+		case *v1routes.AuthRoutes:
+			route.Register(v1api)
+		default:
+			route.Register(protected)
+		}
+
 	}
-	return logger.NewLogger(config)
+
+	r.NoRoute(func(ctx *gin.Context) {
+		ctx.JSON(404, gin.H{
+			"error": "Not Found",
+			"path":  ctx.Request.URL.Path,
+		})
+	})
 }

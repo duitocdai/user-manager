@@ -9,16 +9,23 @@ import (
 type ErrorCode string
 
 const (
-	ErrCodeBadRequest ErrorCode = "BAD_REQUEST"           // 400
-	ErrCodeNotFound   ErrorCode = "NOT_FOUND"             // 404
-	ErrCodeInternal   ErrorCode = "INTERNAL_SERVER_ERROR" // 500
-	ErrCodeConfict    ErrorCode = "CONFLICT"              // 409
+	ErrCodeBadRequest   ErrorCode = "BAD_REQUEST"           // 400
+	ErrCodeNotFound     ErrorCode = "NOT_FOUND"             // 404
+	ErrCodeInternal     ErrorCode = "INTERNAL_SERVER_ERROR" // 500
+	ErrCodeConfict      ErrorCode = "CONFLICT"              // 409
+	ErrCodeUnauthorized ErrorCode = "UNAUTHORIZED"
 )
 
 type AppError struct {
 	Message string
 	Code    ErrorCode
 	Err     error
+}
+type APIResponse struct {
+	Status     string `json:"status"`
+	Message    string `json:"message,omitempty"`
+	Data       any    `json:"data,omitempty"`
+	Pagination any    `json:"pagination,omitempty"`
 }
 
 func (ae *AppError) Error() string {
@@ -42,7 +49,7 @@ func ReponseError(ctx *gin.Context, err error) {
 	if appErr, ok := err.(*AppError); ok {
 		status := httpStatusFromCode(appErr.Code)
 		response := gin.H{
-			"error": appErr.Message,
+			"error": CapitalizeFirst(appErr.Message),
 			"code":  appErr.Code,
 		}
 		if appErr.Err != nil {
@@ -54,11 +61,28 @@ func ReponseError(ctx *gin.Context, err error) {
 	}
 }
 
-func ReponseSuccess(ctx *gin.Context, status int, data any) {
-	ctx.JSON(status, gin.H{
-		"status": "success",
-		"data":   data,
-	})
+func ReponseSuccess(ctx *gin.Context, status int, message string, data ...any) {
+	resp := APIResponse{
+		Status:  "success",
+		Message: CapitalizeFirst(message),
+	}
+
+	if len(data) > 0 && data[0] != nil {
+		if m, ok := data[0].(map[string]any); ok {
+			if p, exists := m["pagination"]; exists {
+				resp.Pagination = p
+			}
+
+			if d, exists := m["data"]; exists {
+				resp.Data = d
+			} else {
+				resp.Data = m
+			}
+		} else {
+			resp.Data = data[0]
+		}
+	}
+	ctx.JSON(status, resp)
 }
 func ReponseStatusCode(ctx *gin.Context, status int) {
 	ctx.Status(status)
@@ -77,6 +101,8 @@ func httpStatusFromCode(code ErrorCode) int {
 		return http.StatusInternalServerError
 	case ErrCodeConfict:
 		return http.StatusConflict
+	case ErrCodeUnauthorized:
+		return http.StatusUnauthorized
 	default:
 		return http.StatusInternalServerError
 	}

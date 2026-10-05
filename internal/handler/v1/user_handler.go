@@ -1,7 +1,6 @@
 package v1handler
 
 import (
-	"log"
 	"net/http"
 
 	v1dto "github.com/duitocdai/internal/dto/v1"
@@ -9,6 +8,7 @@ import (
 	"github.com/duitocdai/internal/utils"
 	"github.com/duitocdai/internal/validation"
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 )
 
 type UserHandler struct {
@@ -21,30 +21,21 @@ func NewUserHandler(service v1service.UserService) *UserHandler {
 	}
 }
 
-type GetUserByUuidParam struct {
-	Uuid string `uri:"uuid" binding:"uuid"`
-}
-type GetUserParams struct {
-	Search string `form:"search" binding:"omitempty,min=3,max=50,search"`
-	Page   int    `form:"page" binding:"omitempty,gte=1,lte=100"`
-	Limit  int    `form:"limit" binding:"omitempty,gte=1,lte=100"`
-}
-
 func (uh *UserHandler) GetAllUser(ctx *gin.Context) {
-	var params GetUserParams
+	var params v1dto.GetUserParams
 
 	if err := ctx.ShouldBindQuery(&params); err != nil {
 		utils.ReponseValidator(ctx, validation.HandleValidationErrors(err))
 		return
 	}
-	if params.Page == 0 {
-		params.Page = 1
+	users, total, err := uh.service.GetAllUser(ctx, params.Search, params.OrderBy, params.Sort, params.Page, params.Limit, false)
+	if err != nil {
+		utils.ReponseError(ctx, err)
+		return
 	}
-	if params.Limit == 0 {
-		params.Limit = 10
-	}
-
-	utils.ReponseSuccess(ctx, http.StatusOK, "usersDTO")
+	userDTO := v1dto.MapUsersToDTO(users)
+	paginationResp := utils.NewPaginationResponse(userDTO, params.Page, params.Limit, total)
+	utils.ReponseSuccess(ctx, http.StatusOK, "User list successfully", paginationResp)
 }
 func (uh *UserHandler) CreateUser(ctx *gin.Context) {
 	var input v1dto.CreateUserInput
@@ -52,38 +43,136 @@ func (uh *UserHandler) CreateUser(ctx *gin.Context) {
 		utils.ReponseValidator(ctx, validation.HandleValidationErrors(err))
 		return
 	}
-	log.Println("vl")
-	utils.ReponseSuccess(ctx, http.StatusCreated, "&userDTO")
+	user := input.MapCreateInputToModel()
+	createdUser, err := uh.service.CreateUser(ctx, user)
+	if err != nil {
+		utils.ReponseError(ctx, err)
+		return
+	}
+	userDTO := v1dto.MapUserToDTO(createdUser)
+	utils.ReponseSuccess(ctx, http.StatusCreated, "user created successsfully", userDTO)
 }
 func (uh *UserHandler) GetUserByUUID(ctx *gin.Context) {
-	var params GetUserByUuidParam
+	var params v1dto.GetUserByUuidParam
 	if err := ctx.ShouldBindUri(&params); err != nil {
 		utils.ReponseValidator(ctx, validation.HandleValidationErrors(err))
 		return
 	}
+	userUuid, err := uuid.Parse(params.Uuid)
+	if err != nil {
+		utils.ReponseError(ctx, err)
+		return
+	}
 
-	utils.ReponseSuccess(ctx, http.StatusCreated, "")
+	user, err := uh.service.GetUserByUUID(ctx, userUuid)
+	if err != nil {
+		utils.ReponseError(ctx, err)
+		return
+	}
+	userDTO := v1dto.MapUserToDTO(user)
+	utils.ReponseSuccess(ctx, http.StatusOK, "get An user successfully", userDTO)
+}
+func (uh *UserHandler) GetUserSoftDeleted(ctx *gin.Context) {
+	var params v1dto.GetUserParams
+
+	if err := ctx.ShouldBindQuery(&params); err != nil {
+		utils.ReponseValidator(ctx, validation.HandleValidationErrors(err))
+		return
+	}
+	users, total, err := uh.service.GetAllUser(ctx, params.Search, params.OrderBy, params.Sort, params.Page, params.Limit, true)
+	if err != nil {
+		utils.ReponseError(ctx, err)
+		return
+	}
+	userDTO := v1dto.MapUsersToDTO(users)
+	paginationResp := utils.NewPaginationResponse(userDTO, params.Page, params.Limit, total)
+	utils.ReponseSuccess(ctx, http.StatusOK, "List user deleted successfully", paginationResp)
 }
 func (uh *UserHandler) UpdateUser(ctx *gin.Context) {
-	var params GetUserByUuidParam
-
+	var params v1dto.GetUserByUuidParam
 	if err := ctx.ShouldBindUri(&params); err != nil {
 		utils.ReponseValidator(ctx, validation.HandleValidationErrors(err))
 		return
 	}
+	userUuid, err := uuid.Parse(params.Uuid)
+	if err != nil {
+		utils.ReponseError(ctx, err)
+		return
+	}
+
 	var input v1dto.UpdateUserInput
 	if err := ctx.ShouldBindJSON(&input); err != nil {
 		utils.ReponseValidator(ctx, validation.HandleValidationErrors(err))
 		return
 	}
+	user := input.MapUpdateInputToModel(userUuid)
 
-	utils.ReponseSuccess(ctx, http.StatusOK, " &userDTO")
+	updatedUser, err := uh.service.UpdateUser(ctx, user)
+	if err != nil {
+		utils.ReponseError(ctx, err)
+		return
+	}
+	userDTO := v1dto.MapUserToDTO(updatedUser)
+	utils.ReponseSuccess(ctx, http.StatusOK, "user updated", userDTO)
 }
-func (uh *UserHandler) DeleteUser(ctx *gin.Context) {
-	var params GetUserByUuidParam
+func (uh *UserHandler) SoftDeleteUser(ctx *gin.Context) {
+	var params v1dto.GetUserByUuidParam
 	if err := ctx.ShouldBindUri(&params); err != nil {
 		utils.ReponseValidator(ctx, validation.HandleValidationErrors(err))
 		return
 	}
-	utils.ReponseStatusCode(ctx, http.StatusNoContent)
+	userUuid, err := uuid.Parse(params.Uuid)
+	if err != nil {
+		utils.ReponseError(ctx, err)
+		return
+	}
+	softDeleteUser, err := uh.service.SoftDeleteUser(ctx, userUuid)
+	if err != nil {
+		utils.ReponseError(ctx, err)
+		return
+	}
+	userDTO := v1dto.MapUserToDTO(softDeleteUser)
+	utils.ReponseSuccess(ctx, http.StatusOK, "user deleted", userDTO)
+}
+
+func (uh *UserHandler) RestoreUser(ctx *gin.Context) {
+	var params v1dto.GetUserByUuidParam
+	if err := ctx.ShouldBindUri(&params); err != nil {
+		utils.ReponseValidator(ctx, validation.HandleValidationErrors(err))
+		return
+	}
+
+	userUuid, err := uuid.Parse(params.Uuid)
+	if err != nil {
+		utils.ReponseError(ctx, err)
+		return
+	}
+
+	restoreUser, err := uh.service.RestoreUser(ctx, userUuid)
+	if err != nil {
+		utils.ReponseError(ctx, err)
+		return
+	}
+	userDTO := v1dto.MapUserToDTO(restoreUser)
+	utils.ReponseSuccess(ctx, http.StatusOK, "user restored", userDTO)
+}
+
+func (uh *UserHandler) DeleteUser(ctx *gin.Context) {
+	var params v1dto.GetUserByUuidParam
+	if err := ctx.ShouldBindUri(&params); err != nil {
+		utils.ReponseValidator(ctx, validation.HandleValidationErrors(err))
+		return
+	}
+	userUuid, err := uuid.Parse(params.Uuid)
+	if err != nil {
+		utils.ReponseError(ctx, err)
+		return
+	}
+
+	err = uh.service.DeleteUser(ctx, userUuid)
+	if err != nil {
+		utils.ReponseError(ctx, err)
+		return
+	}
+	utils.ReponseSuccess(ctx, http.StatusOK, "user deleted")
 }

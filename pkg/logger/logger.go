@@ -2,6 +2,7 @@ package logger
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"io"
 	"os"
@@ -20,6 +21,9 @@ type LoggerConfig struct {
 	Compress   bool
 	IsDev      string
 }
+type contextKey string
+
+const TraceIdKey contextKey = "trace_id"
 
 func NewLogger(config LoggerConfig) *zerolog.Logger {
 	zerolog.TimeFieldFormat = time.RFC3339
@@ -57,4 +61,10 @@ func (w PrettyJSONWriter) Write(p []byte) (n int, err error) {
 		return w.Writer.Write(p)
 	}
 	return w.Writer.Write(prettyJSON.Bytes())
+}
+func GetTraceId(ctx context.Context) string {
+	if traceID, ok := ctx.Value(TraceIdKey).(string); ok {
+		return traceID
+	}
+	return " "
 }

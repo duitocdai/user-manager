@@ -14,10 +14,27 @@ sql:
         emit_pointers_for_null_types: true
         
         overrides:
+        # ==== Textual types (non-nullable & nullable) ====
+          - db_type: "text"
+            go_type: "string"
+          - db_type: "text"
+            go_type: "string"
+            nullable: true
+
+          - db_type: "varchar"
+            go_type: "string"
+          - db_type: "varchar"
+            go_type: "string"
+            nullable: true
+
+          - db_type: "char"
+            go_type: "string"
+            
           - db_type: "uuid"
             go_type: "github.com/google/uuid.UUID"
           - db_type: "timestamptz"
             go_type: "time.Time" 
-          - db_type: "timestamptz"
-            go_type: "time.Time" 
-            nullable: true 
+          - db_type: "timestamp"
+            go_type: "time.Time"  
+          - db_type: "date"
+            go_type: "time.Time"
