@@ -29,10 +29,13 @@ export
 
 # Thư mục chứa migration.
 MIGRATION_DIRS = internal/db/migrations
-
+ENV_FILE =.env
 # Connection string dùng cho migrate.
 CONN_STRING = postgresql://$(DB_USER):$(DB_PASSWORD)@$(DB_HOST):$(DB_PORT)/$(DB_NAME)?sslmode=$(DB_SSLMODE)
 
+PROD_COMPOSE=docker-compose.prod.yml
+NOAPP_COMPOSE=docker-compose.noapp.yml
+DEV_COMPOSE=docker-compose.dev.yml
 
 # =========================================================
 # IMPORT DATABASE
@@ -48,6 +51,17 @@ importdb:
 
 exportdb:
 	docker exec -i postgres-db pg_dump -U root -d master-golang > ./backupdb-master-golang.sql
+
+# =========================================================
+# BUILD A BINARY FILE
+# =========================================================
+build:
+	go build -o .\bin\myapp.exe .\cmd\api
+# =========================================================
+# RUN BINARY
+# =========================================================
+run-binary:
+	.\bin\myapp.exe
 
 
 # =========================================================
@@ -121,9 +135,39 @@ migrate-drop:
 migrate-goto:
 	migrate -path $(MIGRATION_DIRS) -database "$(CONN_STRING)" goto $(VERSION)
 
+# =========================================================
+# DOCKER NOAPP_COMPOSE
+# =========================================================
+noapp:
+	docker compose -f $(NOAPP_COMPOSE) down	
+	docker compose -f $(NOAPP_COMPOSE) --env-file $(ENV_FILE) up -d --build
 
+stop-noapp: 
+	docker compose -f $(NOAPP_COMPOSE) down		
+
+# =========================================================
+# DOCKER DEV
+# =========================================================
+dev:
+	docker compose -f $(DEV_COMPOSE) down
+	docker compose -f $(DEV_COMPOSE) --env-file $(ENV_FILE) up --build
+# =========================================================
+# DOCKER PROD_COMPOSE
+# =========================================================
+prod:
+	docker compose -f $(PROD_COMPOSE) down	
+	docker compose -f $(PROD_COMPOSE) --env-file $(ENV_FILE) up -d --build
+
+stop-prod: 
+	docker compose -f $(PROD_COMPOSE) down	
+
+logs-prod:
+	docker compose -f $(PROD_COMPOSE) logs -f --tail=100
+
+bash:
+	docker exec -it golang-api /bin/sh
 # =========================================================
 # PHONY
 # =========================================================
 
-.PHONY: importdb exportdb server migrate-create migrate-up migrate-down migrate-force migrate-drop migrate-down-n migrate-goto sqlc
+.PHONY: importdb exportdb server migrate-create migrate-up migrate-down migrate-force migrate-drop migrate-down-n migrate-goto sqlc build run-binary noapp stop-noapp dev prod stop-prod logs-prod bash
