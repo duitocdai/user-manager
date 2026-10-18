@@ -3,12 +3,12 @@ package db
 import (
 	"context"
 	"fmt"
-	"log"
 	"time"
 
 	"github.com/duitocdai/internal/config"
 	"github.com/duitocdai/internal/db/sqlc"
 	"github.com/duitocdai/internal/utils"
+	"github.com/duitocdai/pkg/logger"
 	"github.com/duitocdai/pkg/pgx"
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/jackc/pgx/v5/tracelog"
@@ -24,7 +24,7 @@ func InitDB() error {
 	if err != nil {
 		return fmt.Errorf("error passing db config: %v", err)
 	}
-	sqlLogger := utils.NewLoggerWithPath("../../internal/logs/sql.log", "info")
+	sqlLogger := utils.NewLoggerWithPath("sql.log", "info")
 
 	conf.ConnConfig.Tracer = &tracelog.TraceLog{
 		Logger: &pgx.PgxZerologTracer{
@@ -50,6 +50,6 @@ func InitDB() error {
 	if err := DBPool.Ping(ctx); err != nil {
 		return fmt.Errorf("ping error : %v", err)
 	}
-	log.Println("connected")
+	logger.Log.Info().Msg("connected DB")
 	return nil
 }
