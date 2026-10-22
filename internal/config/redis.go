@@ -2,10 +2,10 @@ package config
 
 import (
 	"context"
-	"log"
 	"time"
 
 	"github.com/duitocdai/internal/utils"
+	"github.com/duitocdai/pkg/logger"
 	"github.com/redis/go-redis/v9"
 )
 
@@ -40,9 +40,8 @@ func NewRedisClient() *redis.Client {
 
 	_, err := client.Ping(ctx).Result()
 	if err != nil {
-		log.Fatalf("Failed to connect to Redis")
+		logger.Log.Fatal().Err(err).Msg("Failed to connect to Redis")
 	}
-	log.Println("connected redis")
-
+	logger.Log.Info().Msg("connected redis")
 	return client
 }

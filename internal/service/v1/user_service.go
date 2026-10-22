@@ -4,7 +4,6 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
-	"log"
 	"strings"
 	"time"
 
@@ -12,6 +11,7 @@ import (
 	"github.com/duitocdai/internal/repository"
 	"github.com/duitocdai/internal/utils"
 	"github.com/duitocdai/pkg/cache"
+	"github.com/duitocdai/pkg/logger"
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5/pgconn"
@@ -21,7 +21,7 @@ import (
 
 type userService struct {
 	repo  repository.UserRepository
-	cache *cache.RedisCacheService
+	cache cache.RedisCacheService
 }
 
 func NewUserService(repo repository.UserRepository, redisClient *redis.Client) UserService {
@@ -101,7 +101,7 @@ func (us *userService) CreateUser(ctx *gin.Context, input sqlc.CreateUserParams)
 	}
 	///-- Clear cache redis
 	if err := us.cache.Clear("user:*"); err != nil {
-		log.Printf("fail to clear cache: %v", err)
+		logger.Log.Warn().Err(err).Msg("fail to clear cache")
 	}
 	return user, nil
 }
@@ -135,6 +135,9 @@ func (us *userService) UpdateUser(ctx *gin.Context, input sqlc.UpdateUserParams)
 		}
 		return sqlc.User{}, utils.WrapError(err, "failed to updated", utils.ErrCodeInternal)
 	}
+	if err := us.cache.Clear("users:*"); err != nil {
+		logger.Log.Warn().Err(err).Msg("Failed to clear cache")
+	}
 	return updatedUser, nil
 }
 func (us *userService) SoftDeleteUser(ctx *gin.Context, uuid uuid.UUID) (sqlc.User, error) {
@@ -145,6 +148,9 @@ func (us *userService) SoftDeleteUser(ctx *gin.Context, uuid uuid.UUID) (sqlc.Us
 			return sqlc.User{}, utils.NewError("user not found", utils.ErrCodeNotFound)
 		}
 		return sqlc.User{}, utils.WrapError(err, "failed to delete user", utils.ErrCodeInternal)
+	}
+	if err := us.cache.Clear("users:*"); err != nil {
+		logger.Log.Warn().Err(err).Msg("Failed to clear cache")
 	}
 	return softDeleteUser, nil
 }
@@ -157,6 +163,10 @@ func (us *userService) RestoreUser(ctx *gin.Context, uuid uuid.UUID) (sqlc.User,
 		}
 		return sqlc.User{}, utils.WrapError(err, "failed to restore user", utils.ErrCodeInternal)
 	}
+	if err := us.cache.Clear("users:*"); err != nil {
+		logger.Log.Warn().Err(err).Msg("Failed to clear cache")
+	}
+
 	return restoreUser, nil
 }
 func (us *userService) DeleteUser(ctx *gin.Context, uuid uuid.UUID) error {
@@ -167,6 +177,9 @@ func (us *userService) DeleteUser(ctx *gin.Context, uuid uuid.UUID) error {
 			return utils.NewError("user not found", utils.ErrCodeNotFound)
 		}
 		return utils.WrapError(err, "failed to delete user", utils.ErrCodeInternal)
+	}
+	if err := us.cache.Clear("users:*"); err != nil {
+		logger.Log.Warn().Err(err).Msg("Failed to clear cache")
 	}
 	return nil
 }

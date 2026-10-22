@@ -1,0 +1,41 @@
+{"level":"info","time":"2026-10-21T14:34:00Z","message":"Worker started, consuming from queue: auth_email_queue"}
+{"level":"info","time":"2026-10-21T14:37:15Z","message":"Worker started, consuming from queue: auth_email_queue"}
+{"level":"info","time":"2026-10-21T14:38:56Z","message":"Worker started, consuming from queue: auth_email_queue"}
+{"level":"info","time":"2026-10-21T14:39:46Z","message":"Worker started, consuming from queue: auth_email_queue"}
+{"level":"info","time":"2026-10-21T14:40:31Z","message":"Worker started, consuming from queue: auth_email_queue"}
+{"level":"info","time":"2026-10-21T14:46:59Z","message":"Worker started, consuming from queue: auth_email_queue"}
+{"level":"info","time":"2026-10-21T14:47:24Z","message":"Email sent successfully to [{test@example.com }]"}
+{"level":"info","time":"2026-10-21T14:48:15Z","message":"Worker started, consuming from queue: auth_email_queue"}
+{"level":"info","time":"2026-10-21T14:53:14Z","message":"Worker started, consuming from queue: auth_email_queue"}
+{"level":"info","time":"2026-10-21T14:53:39Z","message":"Email sent successfully to [{test@example.com }]"}
+{"level":"info","time":"2026-10-21T14:54:20Z","message":"Worker stopped, consuming due to context cancellation"}
+{"level":"info","time":"2026-10-21T14:54:20Z","message":"Worker started, consuming from queue: auth_email_queue"}
+{"level":"info","time":"2026-10-21T14:55:53Z","message":"Worker started, consuming from queue: auth_email_queue"}
+{"level":"info","time":"2026-10-21T14:56:30Z","message":"Email sent successfully to [{thanhduy1234@example.com }]"}
+{"level":"info","time":"2026-10-21T15:01:26Z","message":"Worker started, consuming from queue: auth_email_queue"}
+{"level":"info","time":"2026-10-21T15:02:16Z","message":"Email sent successfully to [{thanhduy1234@example.com }]"}
+{"level":"info","time":"2026-10-21T15:04:35Z","message":"Worker stopped, consuming due to context cancellation"}
+{"level":"info","time":"2026-10-21T15:04:35Z","message":"Worker started, consuming from queue: auth_email_queue"}
+{"level":"info","time":"2026-10-21T15:05:44Z","message":"Worker started, consuming from queue: auth_email_queue"}
+{"level":"info","time":"2026-10-21T15:06:31Z","message":"Worker started, consuming from queue: auth_email_queue"}
+{"level":"info","time":"2026-10-21T15:07:13Z","message":"Worker started, consuming from queue: auth_email_queue"}
+{"level":"info","time":"2026-10-21T15:07:18Z","message":"Worker started, consuming from queue: auth_email_queue"}
+{"level":"info","trace_id":"fbf7343d-193e-45d0-a66b-53badde50f24","time":"2026-10-21T15:08:09Z","message":"Email sent successfully to [{thanhduy1234@example.com }]"}
+{"level":"info","time":"2026-10-21T15:11:04Z","message":"Worker started, consuming from queue: auth_email_queue"}
+{"level":"info","time":"2026-10-21T15:11:23Z","message":"Worker started, consuming from queue: auth_email_queue"}
+{"level":"info","time":"2026-10-21T15:17:55Z","message":"Worker started, consuming from queue: auth_email_queue"}
+{"level":"info","time":"2026-10-21T15:18:02Z","message":"Worker started, consuming from queue: auth_email_queue"}
+{"level":"info","time":"2026-10-21T15:18:14Z","message":"Worker started, consuming from queue: auth_email_queue"}
+{"level":"info","time":"2026-10-21T15:18:23Z","message":"Worker started, consuming from queue: auth_email_queue"}
+{"level":"info","time":"2026-10-22T05:18:13Z","message":"Worker started, consuming from queue: auth_email_queue"}
+{"level":"info","time":"2026-10-22T05:24:58Z","message":"Worker started, consuming from queue: auth_email_queue"}
+{"level":"info","time":"2026-10-22T05:29:14Z","message":"Worker started, consuming from queue: auth_email_queue"}
+{"level":"info","time":"2026-10-22T05:31:22Z","message":"Worker started, consuming from queue: auth_email_queue"}
+{"level":"info","time":"2026-10-22T05:33:28Z","message":"Worker started, consuming from queue: auth_email_queue"}
+{"level":"info","time":"2026-10-22T05:36:19Z","message":"Worker started, consuming from queue: auth_email_queue"}
+{"level":"info","time":"2026-10-22T05:42:33Z","message":"Worker started, consuming from queue: auth_email_queue"}
+{"level":"info","time":"2026-10-22T05:44:06Z","message":"Worker started, consuming from queue: auth_email_queue"}
+{"level":"info","time":"2026-10-22T05:47:01Z","message":"Worker started, consuming from queue: auth_email_queue"}
+{"level":"info","time":"2026-10-22T05:48:42Z","message":"Worker stopped, consuming due to context cancellation"}
+{"level":"info","time":"2026-10-22T05:48:42Z","message":"Worker started, consuming from queue: auth_email_queue"}
+{"level":"info","time":"2026-10-22T05:48:45Z","message":"Worker started, consuming from queue: auth_email_queue"}

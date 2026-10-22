@@ -69,7 +69,7 @@ run-binary:
 # =========================================================
 
 server:
-	cd cmd/api; go run .
+	go run ./cmd/api
 
 
 # =========================================================
@@ -151,6 +151,9 @@ stop-noapp:
 dev:
 	docker compose -f $(DEV_COMPOSE) down
 	docker compose -f $(DEV_COMPOSE) --env-file $(ENV_FILE) up --build
+
+stop-dev:
+	docker compose -f $(DEV_COMPOSE) down	
 # =========================================================
 # DOCKER PROD_COMPOSE
 # =========================================================

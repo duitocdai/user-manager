@@ -25,6 +25,11 @@ type contextKey string
 
 const TraceIdKey contextKey = "trace_id"
 
+var Log *zerolog.Logger
+
+func InitLogger(config LoggerConfig) {
+	Log = NewLogger(config)
+}
 func NewLogger(config LoggerConfig) *zerolog.Logger {
 	zerolog.TimeFieldFormat = time.RFC3339
 

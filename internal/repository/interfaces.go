@@ -18,4 +18,5 @@ type UserRepository interface {
 	RestoreUser(ctx context.Context, uuid uuid.UUID) (sqlc.User, error)
 	Delete(ctx context.Context, uuid uuid.UUID) (sqlc.User, error)
 	GetByEmail(ctx context.Context, email string) (sqlc.User, error)
+	UpdatePassword(ctx context.Context, input sqlc.UpdatePasswordParams) (sqlc.User, error)
 }

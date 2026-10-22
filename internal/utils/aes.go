@@ -21,7 +21,6 @@ func EncryptAES(plainText []byte, key []byte) (string, error) {
 	if _, err := rand.Read(nonce); err != nil {
 		return "", err
 	}
-
 	cipherText := aesGCM.Seal(nonce, nonce, plainText, nil)
 	return base64.URLEncoding.EncodeToString(cipherText), nil
 }

@@ -17,6 +17,9 @@ type UserService interface {
 }
 
 type AuthService interface {
-	Login(ctx *gin.Context, email, password string) (string, int, error)
-	Logout(ctx *gin.Context) error
+	Login(ctx *gin.Context, email, password string) (string, string, int, error)
+	Logout(ctx *gin.Context, refreshToken string) error
+	RefreshToken(ctx *gin.Context, token string) (string, string, int, error)
+	RequestForgotPassword(ctx *gin.Context, email string) error
+	ResetPassword(ctx *gin.Context, token, password string) error
 }

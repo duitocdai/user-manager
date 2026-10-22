@@ -30,7 +30,9 @@ func LoggerMiddleware(httpLogger *zerolog.Logger) gin.HandlerFunc {
 		contentType := ctx.GetHeader("Content-Type")
 		requestBody := make(map[string]any)
 		var formFiles []map[string]any
-
+		var sensitiveFields = []string{
+			"password", "pass", "new_password",
+		}
 		// multipart/form-data
 		if strings.HasPrefix(contentType, "multipart/form-data") {
 			if err := ctx.Request.ParseMultipartForm(32 << 20); err == nil && ctx.Request.MultipartForm != nil {
@@ -135,7 +137,7 @@ func LoggerMiddleware(httpLogger *zerolog.Logger) gin.HandlerFunc {
 			Str("request_uri", ctx.Request.RequestURI).
 			Int64("content_length", ctx.Request.ContentLength).
 			Interface("headers", ctx.Request.Header).
-			Interface("request_body", requestBody).
+			Interface("request_body", senitizeRequestBody(requestBody, sensitiveFields)).
 			Int("status_code", statusCode).
 			Interface("response_body", responseBodyParsed).
 			Int64("duration_ms", duration.Milliseconds()).
@@ -152,4 +154,39 @@ func formatFileSize(size int64) string {
 	default:
 		return fmt.Sprintf("%d B", size)
 	}
+}
+
+func senitizeRequestBody(data map[string]any, sensitiveKey []string) map[string]any {
+	senitized := make(map[string]any)
+
+	for key, value := range data {
+		lowerKey := strings.ToLower(key)
+		shouldMask := false
+		for _, s := range sensitiveKey {
+			if lowerKey == s {
+				shouldMask = true
+				break
+			}
+		}
+		if shouldMask {
+			senitized[key] = "*****"
+		} else {
+			switch v := value.(type) {
+			case map[string]any:
+				senitized[key] = senitizeRequestBody(v, sensitiveKey)
+			case []any:
+				var senitizedSlice []any
+				for _, item := range v {
+					if m, ok := item.(map[string]any); ok {
+						senitizedSlice = append(senitizedSlice, senitizeRequestBody(m, sensitiveKey))
+					} else {
+						senitizedSlice = append(senitizedSlice, item)
+					}
+				}
+			default:
+				senitized[key] = value
+			}
+		}
+	}
+	return senitized
 }

@@ -1,0 +1,2 @@
+{"level":"info","trace_id":" ","duration":6456.292182,"operation":"send_mail","to":[{"email":"thanhduy1234@example.com"}],"subject":"Password Reset Request","category":"","time":"2026-10-21T15:02:16Z","message":"Email send successfully"}
+{"level":"info","trace_id":"fbf7343d-193e-45d0-a66b-53badde50f24","duration":6306.065645,"operation":"send_mail","to":[{"email":"thanhduy1234@example.com"}],"subject":"Password Reset Request","category":"","time":"2026-10-21T15:08:09Z","message":"Email send successfully"}

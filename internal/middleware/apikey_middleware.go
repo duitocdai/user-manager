@@ -20,11 +20,13 @@ func ApiKeyMiddleware() gin.HandlerFunc {
 			ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
 				"error": "Missing Api Key",
 			})
+			return
 		}
 		if apiKey != expectedKey {
 			ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
 				"error": "Invalid Api Key",
 			})
+			return
 		}
 
 		ctx.Next()

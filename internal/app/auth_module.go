@@ -7,15 +7,18 @@ import (
 	v1routes "github.com/duitocdai/internal/routes/v1"
 	v1service "github.com/duitocdai/internal/service/v1"
 	"github.com/duitocdai/pkg/auth"
+	"github.com/duitocdai/pkg/cache"
+	"github.com/duitocdai/pkg/mail"
+	"github.com/duitocdai/pkg/rabbitmq"
 )
 
 type AuthModule struct {
 	routes routes.Route
 }
 
-func NewAuthModule(ctx *ModuleContext, tokenService auth.TokenService) *AuthModule {
+func NewAuthModule(ctx *ModuleContext, tokenService auth.TokenService, cacheService cache.RedisCacheService, mailService mail.EmailProviderService, rabbitmqService rabbitmq.RabbitMQService) *AuthModule {
 	userRepo := repository.NewSqlUserRepository(ctx.DB)
-	authService := v1service.NewAuthService(userRepo, tokenService)
+	authService := v1service.NewAuthService(userRepo, tokenService, cacheService, mailService, rabbitmqService)
 	authHandler := v1handler.NewAuthHandler(authService)
 	authRoutes := v1routes.NewAuthRoutes(authHandler)
 

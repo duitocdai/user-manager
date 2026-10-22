@@ -1,0 +1,171 @@
+{"level":"info","time":"2026-10-21T14:34:00Z","message":"Loaded .env api worker successfully"}
+{"level":"info","time":"2026-10-21T14:34:00Z","message":"Loaded .env api proccess successfully"}
+{"level":"info","time":"2026-10-21T14:34:00Z","message":"connected DB"}
+{"level":"info","time":"2026-10-21T14:34:00Z","message":"connected redis"}
+{"level":"info","time":"2026-10-21T14:34:00Z","message":"server is running :8080 "}
+{"level":"info","time":"2026-10-21T14:37:15Z","message":"Loaded .env api proccess successfully"}
+{"level":"info","time":"2026-10-21T14:37:15Z","message":"Loaded .env api worker successfully"}
+{"level":"info","time":"2026-10-21T14:37:15Z","message":"connected DB"}
+{"level":"info","time":"2026-10-21T14:37:15Z","message":"connected redis"}
+{"level":"info","time":"2026-10-21T14:37:15Z","message":"server is running :8080 "}
+{"level":"info","time":"2026-10-21T14:38:56Z","message":"Loaded .env api worker successfully"}
+{"level":"info","time":"2026-10-21T14:38:56Z","message":"Loaded .env api proccess successfully"}
+{"level":"info","time":"2026-10-21T14:38:56Z","message":"connected DB"}
+{"level":"info","time":"2026-10-21T14:38:56Z","message":"connected redis"}
+{"level":"info","time":"2026-10-21T14:38:56Z","message":"server is running :8080 "}
+{"level":"info","time":"2026-10-21T14:39:46Z","message":"Loaded .env api worker successfully"}
+{"level":"info","time":"2026-10-21T14:39:46Z","message":"Loaded .env api proccess successfully"}
+{"level":"info","time":"2026-10-21T14:39:46Z","message":"connected DB"}
+{"level":"info","time":"2026-10-21T14:39:46Z","message":"connected redis"}
+{"level":"info","time":"2026-10-21T14:39:46Z","message":"server is running :8080 "}
+{"level":"info","time":"2026-10-21T14:40:28Z","message":"Loaded .env api proccess successfully"}
+{"level":"info","time":"2026-10-21T14:40:28Z","message":"connected DB"}
+{"level":"info","time":"2026-10-21T14:40:28Z","message":"connected redis"}
+{"level":"info","time":"2026-10-21T14:40:28Z","message":"server is running :8080 "}
+{"level":"info","time":"2026-10-21T14:40:31Z","message":"Loaded .env api worker successfully"}
+{"level":"info","time":"2026-10-21T14:46:59Z","message":"Loaded .env api worker successfully"}
+{"level":"info","time":"2026-10-21T14:47:02Z","message":"Loaded .env api proccess successfully"}
+{"level":"info","time":"2026-10-21T14:47:02Z","message":"connected DB"}
+{"level":"info","time":"2026-10-21T14:47:02Z","message":"connected redis"}
+{"level":"info","time":"2026-10-21T14:47:02Z","message":"server is running :8080 "}
+{"level":"info","time":"2026-10-21T14:48:15Z","message":"Loaded .env api worker successfully"}
+{"level":"info","time":"2026-10-21T14:48:17Z","message":"Loaded .env api proccess successfully"}
+{"level":"info","time":"2026-10-21T14:48:17Z","message":"connected DB"}
+{"level":"info","time":"2026-10-21T14:48:17Z","message":"connected redis"}
+{"level":"info","time":"2026-10-21T14:48:18Z","message":"server is running :8080 "}
+{"level":"info","time":"2026-10-21T14:53:14Z","message":"Loaded .env api worker successfully"}
+{"level":"info","time":"2026-10-21T14:53:16Z","message":"Loaded .env api proccess successfully"}
+{"level":"info","time":"2026-10-21T14:53:16Z","message":"connected DB"}
+{"level":"info","time":"2026-10-21T14:53:16Z","message":"connected redis"}
+{"level":"info","time":"2026-10-21T14:53:16Z","message":"server is running :8080 "}
+{"level":"info","time":"2026-10-21T14:54:20Z","message":"Received shutdown signal"}
+{"level":"info","time":"2026-10-21T14:54:20Z","message":"Loaded .env api worker successfully"}
+{"level":"info","time":"2026-10-21T14:54:22Z","message":"Loaded .env api proccess successfully"}
+{"level":"info","time":"2026-10-21T14:54:22Z","message":"connected DB"}
+{"level":"info","time":"2026-10-21T14:54:22Z","message":"connected redis"}
+{"level":"info","time":"2026-10-21T14:54:22Z","message":"server is running :8080 "}
+{"level":"info","time":"2026-10-21T14:55:52Z","message":"Loaded .env api proccess successfully"}
+{"level":"info","time":"2026-10-21T14:55:53Z","message":"Loaded .env api worker successfully"}
+{"level":"info","time":"2026-10-21T14:55:53Z","message":"connected DB"}
+{"level":"info","time":"2026-10-21T14:55:53Z","message":"connected redis"}
+{"level":"info","time":"2026-10-21T14:55:53Z","message":"server is running :8080 "}
+{"level":"warn","time":"2026-10-21T14:56:58Z","message":"shut down signal received ..."}
+{"level":"info","time":"2026-10-21T15:01:26Z","message":"Loaded .env api worker successfully"}
+{"level":"info","time":"2026-10-21T15:01:28Z","message":"Loaded .env api proccess successfully"}
+{"level":"info","time":"2026-10-21T15:01:28Z","message":"connected DB"}
+{"level":"info","time":"2026-10-21T15:01:28Z","message":"connected redis"}
+{"level":"info","time":"2026-10-21T15:01:28Z","message":"server is running :8080 "}
+{"level":"info","time":"2026-10-21T15:04:35Z","message":"Received shutdown signal"}
+{"level":"info","time":"2026-10-21T15:04:35Z","message":"Loaded .env api worker successfully"}
+{"level":"info","time":"2026-10-21T15:04:37Z","message":"Loaded .env api proccess successfully"}
+{"level":"info","time":"2026-10-21T15:04:37Z","message":"connected DB"}
+{"level":"info","time":"2026-10-21T15:04:37Z","message":"connected redis"}
+{"level":"info","time":"2026-10-21T15:04:37Z","message":"server is running :8080 "}
+{"level":"info","time":"2026-10-21T15:05:44Z","message":"Loaded .env api worker successfully"}
+{"level":"info","time":"2026-10-21T15:05:44Z","message":"Loaded .env api proccess successfully"}
+{"level":"info","time":"2026-10-21T15:05:44Z","message":"connected DB"}
+{"level":"info","time":"2026-10-21T15:05:44Z","message":"connected redis"}
+{"level":"info","time":"2026-10-21T15:05:44Z","message":"server is running :8080 "}
+{"level":"info","time":"2026-10-21T15:06:31Z","message":"Loaded .env api worker successfully"}
+{"level":"info","time":"2026-10-21T15:06:32Z","message":"Loaded .env api proccess successfully"}
+{"level":"info","time":"2026-10-21T15:06:32Z","message":"connected DB"}
+{"level":"info","time":"2026-10-21T15:06:32Z","message":"connected redis"}
+{"level":"info","time":"2026-10-21T15:06:32Z","message":"server is running :8080 "}
+{"level":"info","time":"2026-10-21T15:07:13Z","message":"Loaded .env api worker successfully"}
+{"level":"info","time":"2026-10-21T15:07:14Z","message":"Loaded .env api proccess successfully"}
+{"level":"info","time":"2026-10-21T15:07:14Z","message":"connected DB"}
+{"level":"info","time":"2026-10-21T15:07:14Z","message":"connected redis"}
+{"level":"info","time":"2026-10-21T15:07:14Z","message":"server is running :8080 "}
+{"level":"info","time":"2026-10-21T15:07:17Z","message":"Loaded .env api proccess successfully"}
+{"level":"info","time":"2026-10-21T15:07:17Z","message":"connected DB"}
+{"level":"info","time":"2026-10-21T15:07:17Z","message":"connected redis"}
+{"level":"info","time":"2026-10-21T15:07:17Z","message":"server is running :8080 "}
+{"level":"info","time":"2026-10-21T15:07:18Z","message":"Loaded .env api worker successfully"}
+{"level":"info","time":"2026-10-21T15:11:04Z","message":"Loaded .env api worker successfully"}
+{"level":"info","time":"2026-10-21T15:11:04Z","message":"Loaded .env api proccess successfully"}
+{"level":"info","time":"2026-10-21T15:11:04Z","message":"connected DB"}
+{"level":"info","time":"2026-10-21T15:11:04Z","message":"connected redis"}
+{"level":"info","time":"2026-10-21T15:11:04Z","message":"server is running :8080 "}
+{"level":"info","time":"2026-10-21T15:11:23Z","message":"Loaded .env api worker successfully"}
+{"level":"info","time":"2026-10-21T15:11:23Z","message":"Loaded .env api proccess successfully"}
+{"level":"info","time":"2026-10-21T15:11:23Z","message":"connected DB"}
+{"level":"info","time":"2026-10-21T15:11:23Z","message":"connected redis"}
+{"level":"info","time":"2026-10-21T15:11:23Z","message":"server is running :8080 "}
+{"level":"info","time":"2026-10-21T15:17:55Z","message":"Loaded .env api worker successfully"}
+{"level":"info","time":"2026-10-21T15:17:57Z","message":"Loaded .env api proccess successfully"}
+{"level":"info","time":"2026-10-21T15:17:57Z","message":"connected DB"}
+{"level":"info","time":"2026-10-21T15:17:57Z","message":"connected redis"}
+{"level":"info","time":"2026-10-21T15:17:57Z","message":"server is running :8080 "}
+{"level":"info","time":"2026-10-21T15:18:02Z","message":"Loaded .env api worker successfully"}
+{"level":"info","time":"2026-10-21T15:18:02Z","message":"Loaded .env api proccess successfully"}
+{"level":"info","time":"2026-10-21T15:18:02Z","message":"connected DB"}
+{"level":"info","time":"2026-10-21T15:18:02Z","message":"connected redis"}
+{"level":"info","time":"2026-10-21T15:18:02Z","message":"server is running :8080 "}
+{"level":"info","time":"2026-10-21T15:18:14Z","message":"Loaded .env api worker successfully"}
+{"level":"info","time":"2026-10-21T15:18:16Z","message":"Loaded .env api proccess successfully"}
+{"level":"info","time":"2026-10-21T15:18:16Z","message":"connected DB"}
+{"level":"info","time":"2026-10-21T15:18:16Z","message":"connected redis"}
+{"level":"info","time":"2026-10-21T15:18:16Z","message":"server is running :8080 "}
+{"level":"info","time":"2026-10-21T15:18:23Z","message":"Loaded .env api worker successfully"}
+{"level":"info","time":"2026-10-21T15:18:23Z","message":"Loaded .env api proccess successfully"}
+{"level":"info","time":"2026-10-21T15:18:23Z","message":"connected DB"}
+{"level":"info","time":"2026-10-21T15:18:23Z","message":"connected redis"}
+{"level":"info","time":"2026-10-21T15:18:23Z","message":"server is running :8080 "}
+{"level":"warn","time":"2026-10-21T15:33:15Z","message":"shut down signal received ..."}
+{"level":"info","time":"2026-10-22T05:18:09Z","message":"Loaded .env api proccess successfully"}
+{"level":"info","time":"2026-10-22T05:18:10Z","message":"connected DB"}
+{"level":"info","time":"2026-10-22T05:18:10Z","message":"connected redis"}
+{"level":"info","time":"2026-10-22T05:18:10Z","message":"server is running :8080 "}
+{"level":"info","time":"2026-10-22T05:18:13Z","message":"Loaded .env api worker successfully"}
+{"level":"info","time":"2026-10-22T05:24:58Z","message":"Loaded .env api worker successfully"}
+{"level":"info","time":"2026-10-22T05:24:58Z","message":"Loaded .env api proccess successfully"}
+{"level":"info","time":"2026-10-22T05:24:58Z","message":"connected DB"}
+{"level":"info","time":"2026-10-22T05:24:58Z","message":"connected redis"}
+{"level":"info","time":"2026-10-22T05:24:58Z","message":"server is running :8080 "}
+{"level":"info","time":"2026-10-22T05:29:12Z","message":"Loaded .env api proccess successfully"}
+{"level":"info","time":"2026-10-22T05:29:12Z","message":"connected DB"}
+{"level":"info","time":"2026-10-22T05:29:12Z","message":"connected redis"}
+{"level":"info","time":"2026-10-22T05:29:12Z","message":"server is running :8080 "}
+{"level":"info","time":"2026-10-22T05:29:14Z","message":"Loaded .env api worker successfully"}
+{"level":"info","time":"2026-10-22T05:31:22Z","message":"Loaded .env api worker successfully"}
+{"level":"info","time":"2026-10-22T05:31:22Z","message":"Loaded .env api proccess successfully"}
+{"level":"info","time":"2026-10-22T05:31:22Z","message":"connected DB"}
+{"level":"info","time":"2026-10-22T05:31:22Z","message":"connected redis"}
+{"level":"info","time":"2026-10-22T05:31:22Z","message":"server is running :8080 "}
+{"level":"info","time":"2026-10-22T05:33:25Z","message":"Loaded .env api proccess successfully"}
+{"level":"info","time":"2026-10-22T05:33:25Z","message":"connected DB"}
+{"level":"info","time":"2026-10-22T05:33:25Z","message":"connected redis"}
+{"level":"info","time":"2026-10-22T05:33:25Z","message":"server is running :8080 "}
+{"level":"info","time":"2026-10-22T05:33:28Z","message":"Loaded .env api worker successfully"}
+{"level":"warn","time":"2026-10-22T05:34:08Z","message":"shut down signal received ..."}
+{"level":"info","time":"2026-10-22T05:36:17Z","message":"Loaded .env api proccess successfully"}
+{"level":"info","time":"2026-10-22T05:36:17Z","message":"connected DB"}
+{"level":"info","time":"2026-10-22T05:36:17Z","message":"connected redis"}
+{"level":"info","time":"2026-10-22T05:36:17Z","message":"server is running :8080 "}
+{"level":"info","time":"2026-10-22T05:36:19Z","message":"Loaded .env api worker successfully"}
+{"level":"info","time":"2026-10-22T05:42:33Z","message":"Loaded .env api worker successfully"}
+{"level":"info","time":"2026-10-22T05:42:33Z","message":"Loaded .env api proccess successfully"}
+{"level":"info","time":"2026-10-22T05:42:33Z","message":"connected DB"}
+{"level":"info","time":"2026-10-22T05:42:33Z","message":"connected redis"}
+{"level":"info","time":"2026-10-22T05:42:33Z","message":"server is running :8080 "}
+{"level":"info","time":"2026-10-22T05:44:06Z","message":"Loaded .env api worker successfully"}
+{"level":"info","time":"2026-10-22T05:44:06Z","message":"Loaded .env api proccess successfully"}
+{"level":"info","time":"2026-10-22T05:44:07Z","message":"connected DB"}
+{"level":"info","time":"2026-10-22T05:44:07Z","message":"connected redis"}
+{"level":"info","time":"2026-10-22T05:44:07Z","message":"server is running :8080 "}
+{"level":"info","time":"2026-10-22T05:47:00Z","message":"Loaded .env api proccess successfully"}
+{"level":"info","time":"2026-10-22T05:47:00Z","message":"connected DB"}
+{"level":"info","time":"2026-10-22T05:47:00Z","message":"connected redis"}
+{"level":"info","time":"2026-10-22T05:47:00Z","message":"server is running :8080 "}
+{"level":"info","time":"2026-10-22T05:47:01Z","message":"Loaded .env api worker successfully"}
+{"level":"info","time":"2026-10-22T05:48:42Z","message":"Received shutdown signal"}
+{"level":"info","time":"2026-10-22T05:48:42Z","message":"Loaded .env api worker successfully"}
+{"level":"info","time":"2026-10-22T05:48:42Z","message":"Loaded .env api proccess successfully"}
+{"level":"info","time":"2026-10-22T05:48:42Z","message":"connected DB"}
+{"level":"info","time":"2026-10-22T05:48:42Z","message":"connected redis"}
+{"level":"info","time":"2026-10-22T05:48:42Z","message":"server is running :8080 "}
+{"level":"info","time":"2026-10-22T05:48:45Z","message":"Loaded .env api worker successfully"}
+{"level":"info","time":"2026-10-22T05:48:45Z","message":"Loaded .env api proccess successfully"}
+{"level":"info","time":"2026-10-22T05:48:45Z","message":"connected DB"}
+{"level":"info","time":"2026-10-22T05:48:45Z","message":"connected redis"}
+{"level":"info","time":"2026-10-22T05:48:45Z","message":"server is running :8080 "}
